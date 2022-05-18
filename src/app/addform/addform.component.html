@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .row-bg:nth-child(even){
+    background-color: azure;
+  }
+
+  .row-bg:nth-child(odd){
+    background-color: beige;
+  }
+</style>
+</head>
+<body>
+<h3>Employees</h3>
+<table>
+  <tr style="background-color: antiquewhite">
+    <th>Select</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+  </tr>
+  <tr *ngFor="let employee of employees" class="row-bg">
+
+    <td><input type="checkbox" value="{{employee.id}}}"></td>
+    <td>{{employee.firstname}}</td>
+    <td style="display: table-cell">{{employee.lastname}}</td>
+    <td>{{employee.email}}</td>
+    <td>{{employee.mobile}}</td>
+    <button (click)="edit()">Edit</button>
+    <button (click)="delete(employee.id)">Delete</button>
+
+  </tr>
+</table>
+<button (click)="delete(2)">Delete Selected</button>
+
+<h3>Add New Employee</h3>
+<form [formGroup]="addEmployeefrom">
+  <table>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Mobile Number</th>
+    </tr>
+    <ng-container formArrayName="employeesX">
+      <tr *ngFor="let employeesX of employeesX().controls;let i=index" [formGroupName]="i">
+        <td><input formControlName="firstname" [id]="'firstname' + i" type="text"/></td>
+        <td><input formControlName="lastname" type="text"/></td>
+        <td><input formControlName="email" type="text"/></td>
+        <td><input formControlName="mobile" type="text"/></td>
+        <td><button (click)="removeRow(i)">Remove</button></td>
+      </tr>
+    </ng-container>
+    <tr>
+      <td colspan="4"><button (click)="addNewEmployee()">Add Row</button></td>
+    </tr>
+    <tr>
+      <td colspan="4"><button (click)="save()">Save All</button></td>
+    </tr>
+
+
+
+  </table>
+
+</form>
+</body>
+
+</html>
